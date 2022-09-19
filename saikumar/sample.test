@@ -1,0 +1,7 @@
+#! /bin/bash
+
+echo "Hello-world"
+echo "yum update packages"
+echo "yum install httpd -y"
+echo "systemctl start httpd.service"
+echo "chkconfig httpd on"
