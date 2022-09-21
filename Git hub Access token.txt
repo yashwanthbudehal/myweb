@@ -1,0 +1,8 @@
+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 ---------Github access token
+
+
+
+git remote set-url origin https://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@github.com/knowledge27295/myweb.git
+
+
+git origin master
