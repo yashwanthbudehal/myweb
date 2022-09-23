@@ -1,11 +1,4 @@
-AWS
-AZURE
-GCP
-OPENSTOCK
-ORCALE
-IBM
-IAM
-RDS
-EC2
-VPC
-ELB
+lambda
+EBS
+EFS
+Cloud watch
