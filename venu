@@ -2,3 +2,6 @@ lambda
 EBS
 EFS
 Cloud watch
+newrelic
+datadog
+cloudformation
