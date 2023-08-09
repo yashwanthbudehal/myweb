@@ -3,3 +3,5 @@ vcs
 maven
 terraform
 Ansible
+Docker
+kubernetes
