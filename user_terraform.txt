@@ -1,0 +1,26 @@
+echo $"export PATH=\$PATH:$(pwd)" >> ~/.bash_profile
+
+source ~/.bash_profile
+
+user: anil
+
+AKIA36AUW32JKBJS7XXW
+
+g4A9Czq8gI++AwCmbOlW7+M+EeoxOwH/3DFttOCf
+
+provider "aws" {
+  region     = "ap-northeast-1"
+  access_key = "AKIA36AUW32JKBJS7XXW"
+  secret_key = "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"
+}
+
+
+
+
+
+
+
+
+
+
+
