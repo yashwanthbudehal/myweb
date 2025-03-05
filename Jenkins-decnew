@@ -16,19 +16,26 @@ pipeline{
                 sh "mv target/*.war target/myweb.war"
             }
         }
-        stage("deploy-dev"){
-            steps{
+
+        stage("deploy-dev") {
+            steps {
                 sshagent(['agent1']) {
-                sh """
-                    scp -v -o StrictHostKeyChecking=no target/myweb.war ubuntu@13.114.204.16:/opt/tomcat9/webapps/
-                    
-                    ssh ubuntu@13.114.204.16 /opt/tomcat9/bin/shutdown.sh
-                    
-                    ssh ubuntu@13.114.204.16 /opt/tomcat9/bin/startup.sh
-                
-                """
-            }
-            
+                    sh """
+                        echo "Creating webapps directory if not exists..."
+                        ssh ubuntu@13.114.204.16 'sudo mkdir -p /opt/tomcat9/webapps && sudo chown -R ubuntu:ubuntu /opt/tomcat9/webapps'
+        
+                        echo "Copying WAR file to Tomcat..."
+                        scp -v -o StrictHostKeyChecking=no target/myweb.war ubuntu@13.114.204.16:/opt/tomcat9/webapps/
+        
+                        echo "Stopping Tomcat..."
+                        ssh ubuntu@13.114.204.16 'sudo /opt/tomcat9/bin/shutdown.sh || echo "Tomcat not running"'
+        
+                        echo "Starting Tomcat..."
+                        ssh ubuntu@13.114.204.16 'nohup sudo /opt/tomcat9/bin/startup.sh > /dev/null 2>&1 &'
+                        
+                        echo "Deployment completed successfully!"
+                    """
+                }
             }
         }
     }
