@@ -40,7 +40,7 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to Jenkins</h1>
+    <h1>Application Deployed Successfully</h1>
 </body>
 </html>
 
