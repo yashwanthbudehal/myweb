@@ -3,88 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lord Hanuman Drawing</title>
+    <title>Login Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
         }
-        canvas {
-            border: 1px solid #000;
+        .login-container {
             background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #45a049;
+        }
+        .login-container .forgot-password {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .login-container .forgot-password a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .login-container .forgot-password a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <h1>Lord Hanuman Drawing</h1>
-    <canvas id="hanumanCanvas" width="400" height="400"></canvas>
 
-    <script>
-        const canvas = document.getElementById('hanumanCanvas');
-        const ctx = canvas.getContext('2d');
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="your-server-side-script.php" method="POST">
+            <input type="text" name="username" placeholder="Enter your username" required>
+            <input type="password" name="password" placeholder="Enter your password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div class="forgot-password">
+            <a href="#">Forgot password?</a>
+        </div>
+    </div>
 
-        // Draw Hanuman's head
-        ctx.beginPath();
-        ctx.arc(200, 100, 50, 0, Math.PI * 2, true); // Outer circle
-        ctx.fillStyle = '#FFD700'; // Golden color
-        ctx.fill();
-        ctx.stroke();
-
-        // Draw eyes
-        ctx.beginPath();
-        ctx.arc(180, 90, 10, 0, Math.PI * 2, true); // Left eye
-        ctx.arc(220, 90, 10, 0, Math.PI * 2, true); // Right eye
-        ctx.fillStyle = '#FFFFFF'; // White color
-        ctx.fill();
-        ctx.stroke();
-
-        // Draw pupils
-        ctx.beginPath();
-        ctx.arc(180, 90, 5, 0, Math.PI * 2, true); // Left pupil
-        ctx.arc(220, 90, 5, 0, Math.PI * 2, true); // Right pupil
-        ctx.fillStyle = '#000000'; // Black color
-        ctx.fill();
-        ctx.stroke();
-
-        // Draw nose
-        ctx.beginPath();
-        ctx.moveTo(200, 110);
-        ctx.lineTo(190, 130);
-        ctx.lineTo(210, 130);
-        ctx.closePath();
-        ctx.fillStyle = '#000000'; // Black color
-        ctx.fill();
-        ctx.stroke();
-
-        // Draw mouth
-        ctx.beginPath();
-        ctx.arc(200, 140, 20, 0, Math.PI, false); // Smiling mouth
-        ctx.stroke();
-
-        // Draw body
-        ctx.beginPath();
-        ctx.moveTo(200, 150);
-        ctx.lineTo(200, 250); // Body line
-        ctx.stroke();
-
-        // Draw arms
-        ctx.beginPath();
-        ctx.moveTo(200, 170);
-        ctx.lineTo(150, 200); // Left arm
-        ctx.moveTo(200, 170);
-        ctx.lineTo(250, 200); // Right arm
-        ctx.stroke();
-
-        // Draw legs
-        ctx.beginPath();
-        ctx.moveTo(200, 250);
-        ctx.lineTo(150, 300); // Left leg
-        ctx.moveTo(200, 250);
-        ctx.lineTo(250, 300); // Right leg
-        ctx.stroke();
-    </script>
 </body>
 </html>
+
