@@ -7,14 +7,14 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 50px;
             background-color: #f4f4f4;
             text-align: center;
         }
 
         .highlight {
             background-color: yellow;
-            color: black;
+            color: green;
             font-weight: bold;
             padding: 2px 4px;
             border-radius: 3px;
@@ -24,7 +24,7 @@
 <body>
 
     <h1>Welcome to My Webpage</h1>
-    <p>Here is a highlighted name: <span class="highlight">Saikumar-DevOps</span></p>
+    <p>Here is a highlighted name: <span class="highlight">Saikumar-Webpage</span></p>
 
 </body>
 </html>
