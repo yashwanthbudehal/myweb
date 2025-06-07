@@ -1,5 +1,5 @@
 <html>
 <body>
-	<h1 style="color: dark pink; font-size: 40px;" align="center">  Triggered webhook </h1>
+	<h1 style="color: green; font-size: 40px;" align="center">  Triggered poll scm </h1>
 </body>
 </html>
