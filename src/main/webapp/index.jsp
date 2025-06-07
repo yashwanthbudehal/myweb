@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Login - E-Commerce</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,44 +16,48 @@
         }
         .login-container {
             background-color: #fff;
-            padding: 20px;
+            padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 100%;
+            max-width: 400px;
             text-align: center;
         }
-        .login-container h2 {
+        h2 {
             margin-bottom: 20px;
+            color: #333;
         }
-        .login-container input {
+        input[type="email"], input[type="password"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+            font-size: 16px;
         }
-        .login-container button {
+        button {
             width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
+            padding: 12px;
+            background-color: #28a745;
             color: white;
             border: none;
             border-radius: 4px;
+            font-size: 16px;
             cursor: pointer;
         }
-        .login-container button:hover {
-            background-color: #45a049;
+        button:hover {
+            background-color: #218838;
         }
-        .login-container .forgot-password {
+        .forgot-password {
             margin-top: 10px;
             font-size: 14px;
         }
-        .login-container .forgot-password a {
-            color: #007BFF;
+        .forgot-password a {
+            color: #007bff;
             text-decoration: none;
         }
-        .login-container .forgot-password a:hover {
+        .forgot-password a:hover {
             text-decoration: underline;
         }
     </style>
@@ -61,10 +65,10 @@
 <body>
 
     <div class="login-container">
-        <h2>Login</h2>
-        <form action="your-server-side-script.php" method="POST">
-            <input type="text" name="username" placeholder="Enter your username" required>
-            <input type="password" name="password" placeholder="Enter your password" required>
+        <h2>Login to Your Account</h2>
+        <form action="/submit-login" method="POST">
+            <input type="email" name="email" placeholder="Enter your email" required autocomplete="username">
+            <input type="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
             <button type="submit">Login</button>
         </form>
         <div class="forgot-password">
