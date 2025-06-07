@@ -137,4 +137,9 @@ footer {
 }
 
 
+document.getElementById('bg-color').addEventListener('input', function(event) {
+    document.documentElement.style.setProperty('--bg-color', event.target.value);
+});
+
+
 
