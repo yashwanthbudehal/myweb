@@ -7,10 +7,10 @@
     <style>
         /* Apply a linear gradient background */
         body {
-            background: pink(45deg, #ff6b6b, #f7b7a3, #f7d6e0, #f7b7a3);
+            background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7d6e0, #f7b7a3);
             background-size: 400% 400%;
             animation: gradientAnimation 10s ease infinite;
-            color: pink;
+            color: red;
             font-family: 'Arial', sans-serif;
             margin: 0;
             height: 100vh;
