@@ -47,4 +47,94 @@
 </body>
 </html>
 
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-color, #ffffff);
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header Styling */
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Color Picker Styling */
+.color-picker {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Products Section Styling */
+.products {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.product {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    width: 200px;
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.product h2 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.product p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.product button {
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.product button:hover {
+    background-color: #218838;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+
 
