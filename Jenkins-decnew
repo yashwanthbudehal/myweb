@@ -1,5 +1,5 @@
 pipeline{
-    agent { label 'Dev' }
+    agent any
     
     environment{
         PATH = "/opt/maven3/bin:$PATH"
@@ -7,7 +7,7 @@ pipeline{
     stages{
         stage("Git Checkout"){
             steps{
-                git credentialsId: 'github', url: 'https://github.com/Karthikeyareddy81/myweb.git'
+                git credentialsId: 'javahome2', url: 'https://github.com/srinivas1987devops/myweb.git'
             }
         }
         stage("Maven Build"){
@@ -16,26 +16,19 @@ pipeline{
                 sh "mv target/*.war target/myweb.war"
             }
         }
-
-        stage("deploy-dev") {
-            steps {
-                sshagent(['agent1']) {
-                    sh """
-                        echo "Creating webapps directory if not exists..."
-                        ssh ubuntu@13.114.204.16 'sudo mkdir -p /opt/tomcat9/webapps && sudo chown -R ubuntu:ubuntu /opt/tomcat9/webapps'
-        
-                        echo "Copying WAR file to Tomcat..."
-                        scp -v -o StrictHostKeyChecking=no target/myweb.war ubuntu@13.114.204.16:/opt/tomcat9/webapps/
-        
-                        echo "Stopping Tomcat..."
-                        ssh ubuntu@13.114.204.16 'sudo /opt/tomcat9/bin/shutdown.sh || echo "Tomcat not running"'
-        
-                        echo "Starting Tomcat..."
-                        ssh ubuntu@13.114.204.16 'nohup sudo /opt/tomcat9/bin/startup.sh > /dev/null 2>&1 &'
-                        
-                        echo "Deployment completed successfully!"
-                    """
-                }
+        stage("deploy-dev"){
+            steps{
+                sshagent(['tomcat-new']) {
+                sh """
+                    scp -o StrictHostKeyChecking=no target/myweb.war  ec2-user@172.31.10.233:/home/ec2-user/apache-tomcat-9.0.64/webapps/
+                    
+                    ssh ec2-user@172.31.10.233 /home/ec2-user/apache-tomcat-9.0.64/bin/shutdown.sh
+                    
+                    ssh ec2-user@172.31.10.233 /home/ec2-user/apache-tomcat-9.0.64/bin/startup.sh
+                
+                """
+            }
+            
             }
         }
     }
