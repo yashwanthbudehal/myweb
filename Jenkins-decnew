@@ -24,7 +24,7 @@ pipeline{
                     
                     sudo ssh ec2-user@172.31.26.58 /home/ec2-user/apache-tomcat-9.0.106/bin/shutdown.sh
                     
-                   sudo ssh ec2-user@172.31.26.58 /home/ec2-user/apache-tomcat-9.0.106/bin/startup.sh
+                    sudo ssh ec2-user@172.31.26.58 /home/ec2-user/apache-tomcat-9.0.106/bin/startup.sh
                 
                 """
             }
