@@ -1,0 +1,277 @@
+--Sonarqube--
+1.defaultport--9000
+2.install sonarqube-scanner plugin from manage-jenkins --available plugins
+3.configure sonarcube plugin in manage-Jenkins,system, SonarQube servers
+---
+
+## ✅ SonarQube Integration: Overview
+
+Here's what the pipeline will do:
+
+1. **Build Java project with Maven**
+2. **Run SonarQube analysis**
+3. **Upload results to SonarQube server**
+4. (Optional) Enforce quality gates
+
+---
+
+## 🔧 Step-by-Step Integration Guide
+
+---
+
+### ✅ 1. Install and Configure SonarQube
+
+#### A. **Install SonarQube** (if not already)
+
+* You can run it via Docker:
+
+```bash
+docker run -d --name sonarqube \
+  -p 9000:9000 \
+  sonarqube:latest
+```
+
+* Access via: [http://localhost:9000](http://localhost:9000)
+
+#### B. **Generate Sonar Token**
+
+1. Log in to SonarQube
+2. Go to **My Account → Security**
+3. Generate a new token (e.g., `jenkins-sonar-token`)
+
+---
+
+### ✅ 2. Install Plugins in Jenkins
+
+* **SonarQube Scanner for Jenkins**
+* **Pipeline Plugin**
+
+Go to: **Jenkins → Manage Jenkins → Plugin Manager**
+
+---
+
+### ✅ 3. Configure SonarQube in Jenkins
+
+> Go to: **Manage Jenkins → Configure System**
+
+#### A. Under **SonarQube Servers**:
+
+* Name: `SonarQube`
+* Server URL: `http://localhost:9000` (or your server IP)
+* Server authentication token:
+
+  * Add the token you generated as a **Secret Text Credential**
+  * Use its ID when referencing from pipeline
+
+
+---
+
+### ✅ 4. Add Sonar Properties to pom.xml
+<properties>
+        <docker.image.prefix>kammana</docker.image.prefix>
+        <sonar.host.url>http://18.184.140.118:9000/</sonar.host.url>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+---
+
+### ✅ 6. Jenkins Pipeline Example (Declarative)
+
+stage("Maven Build"){
+            steps{
+                sh "mvn clean sonar:sonar package"
+                
+            }
+        }
+
+---
+
+## 🧪 What You'll See in SonarQube:
+
+* Code Smells
+* Bugs
+* Vulnerabilities
+* Duplicated Code
+* Code Coverage (if unit tests with coverage reporting are enabled)
+
+---
+
+
+
+--Nexus--
+1.defaultport--8081
+2.install nexusArtifactuploader plugins manage-jenkins --available plugins
+Integrating **Maven**, **Nexus**, and **Jenkins** is a common DevOps pipeline setup to build, store, and deploy Java applications like **Spring Boot**. Here's a complete step-by-step guide to set it up the right way.
+
+---
+
+## ✅ Overview of the Workflow
+
+1. **Developer pushes code to Git**
+2. **Jenkins triggers a build**
+3. **Maven builds the project**
+4. **Artifact (JAR/WAR) is uploaded to Nexus**
+5. (Optional) Deployment steps follow
+
+---
+
+## 🔧 Step-by-Step Integration Guide
+
+---
+
+### ✅ 1. Set Up Jenkins Environment
+
+#### Install Jenkins Plugins:
+
+* **Maven Integration Plugin**
+* **Git Plugin**
+* **Pipeline**
+* **Nexus Artifact Uploader** (optional but helpful)
+
+#### Configure Maven in Jenkins:
+
+* Go to **Manage Jenkins → Global Tool Configuration**
+* Add Maven (name it something like `Maven 3.8.7`)
+* Also configure JDK if needed
+
+---
+
+### ✅ 2. Configure Nexus Credentials in Jenkins
+
+* Go to **Manage Jenkins → Credentials → Global**
+* Add:
+
+  * **Username with Password**
+  * ID: `nexus-creds` (or any ID you prefer)
+  * Username: your Nexus user
+  * Password: your Nexus password or token
+
+---
+
+### ✅ 3. Create a Maven Project with Distribution Management
+
+In your `pom.xml`, add:
+
+```xml
+<distributionManagement>
+    <repository>
+        <id>nexus</id>
+        <url>http://<your-nexus-host>:8081/repository/maven-releases/</url>
+    </repository>
+</distributionManagement>
+```
+
+Also, make sure the artifact is defined:
+
+```xml
+<groupId>com.example</groupId>
+<artifactId>myapp</artifactId>
+<version>1.0.0</version>
+<packaging>jar</packaging>
+```
+
+---
+
+### ✅ 4. Jenkinsfile / Pipeline Script
+
+You have **two options** to upload the artifact to Nexus:
+
+---
+
+### 🔹 Option A: Use Maven Deploy (Preferred for Full Maven Integration)
+
+Use a `settings.xml` file with credentials, then run `mvn deploy`.
+
+#### `settings.xml` (on Jenkins agent or global):
+
+```xml
+<servers>
+    <server>
+        <id>nexus</id>
+        <username>${env.NEXUS_USER}</username>
+        <password>${env.NEXUS_PASS}</password>
+    </server>
+</servers>
+```
+
+#### Jenkins Pipeline:
+
+```groovy
+pipeline {
+    agent any
+
+    environment {
+        NEXUS_USER = credentials('nexus-creds').username
+        NEXUS_PASS = credentials('nexus-creds').password
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your-org/your-repo.git'
+            }
+        }
+
+        stage('Build and Deploy') {
+            steps {
+                sh 'mvn clean deploy -DskipTests --settings settings.xml'
+            }
+        }
+    }
+}
+```
+
+---
+
+### 🔹 Option B: Use Nexus Artifact Uploader Plugin
+
+Simpler for uploading single files like WAR or JAR.
+
+```groovy
+stage('Upload WAR To Nexus') {
+    steps {
+        nexusArtifactUploader artifacts: [[
+            artifactId: 'myapp',
+            classifier: '',
+            file: 'target/myapp-1.0.0.war',
+            type: 'war'
+        ]],
+        credentialsId: 'nexus-creds',
+        groupId: 'com.example',
+        nexusUrl: 'http://your-nexus-url:8081',
+        nexusVersion: 'nexus3',
+        protocol: 'http',
+        repository: 'maven-releases',
+        version: '1.0.0'
+    }
+}
+```
+
+---
+
+### ✅ 5. Test Your Pipeline
+
+* Push a commit to Git
+* Jenkins will trigger the pipeline
+* Maven will build the app
+* Artifact gets uploaded to Nexus
+* Confirm upload in Nexus UI
+
+---
+
+## 📌 Summary Checklist
+
+| Task                                           | Status |
+| ---------------------------------------------- | ------ |
+| ✅ Jenkins installed & running                  | ✔️     |
+| ✅ Maven configured in Jenkins                  | ✔️     |
+| ✅ Nexus configured & reachable                 | ✔️     |
+| ✅ Credentials stored in Jenkins                | ✔️     |
+| ✅ Jenkinsfile created with deploy/upload stage | ✔️     |
+| ✅ `pom.xml` has distribution management        | ✔️     |
+
+---
+
+
