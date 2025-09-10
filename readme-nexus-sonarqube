@@ -1,4 +1,4 @@
---Sonarqube--
+--Sonarqube------------------------------------------------------------------------------------------------------
 1.defaultport--9000
 2.install sonarqube-scanner plugin from manage-jenkins --available plugins
 3.configure sonarcube plugin in manage-Jenkins,system, SonarQube servers
@@ -100,7 +100,7 @@ stage("Maven Build"){
 
 
 
---Nexus--
+--Nexus----------------------------------------------------------------------------------------------------------------------
 1.defaultport--8081
 2.install nexusArtifactuploader plugins manage-jenkins --available plugins
 Integrating **Maven**, **Nexus**, and **Jenkins** is a common DevOps pipeline setup to build, store, and deploy Java applications like **Spring Boot**. Here's a complete step-by-step guide to set it up the right way.
